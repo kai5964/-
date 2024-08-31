@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖片滑動過渡效果</title>
+    <style>
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            background-image: url("https://www.photoeyes.com.tw/wp-content/uploads/2015/09/night-sky-stars.jpg");
+        }
+        .header-text {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 24px;
+            color: #ffffff;
+            background-color: rgba(0, 0, 0, 0.5); /* 添加半透明背景 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .top-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 10px 0;
+            position: absolute;
+            top: 60px;  /* 將文字框固定在網頁的最上方 */
+            left: 0;
+            background-color: rgba(255, 255, 255, 0.8); /* 添加背景色以使文字更清晰 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加陰影 */
+        }
+        .box {
+            flex: 1 1 20%; 
+            text-align: center;
+            padding: 10px;
+            margin: 0 5px; 
+            max-width: 180px; 
+        }
+        .box1 { background-color: #f8b400; }
+        .box2 { background-color: #009688; }
+        .box3 { background-color: #3f51b5; }
+        .box4 { background-color: #e91e63; }
+        .box5 {background-color: chocolate;}
+
+        #slideshow {
+            width: 80%;
+            max-width: 600px;
+            height: 400px;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        #slideshow img {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            transition: transform 1s ease-in-out, left 1s ease-in-out;
+        }
+        #slideshow img.active {
+            left: 0;
+            transform: translateX(0);
+        }
+        #slideshow img.previous {
+            left: 0;
+            transform: translateX(-100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="header-text">
+        歡迎來到我們的專題網站
+        你可以在這裡獲得以下協助...
+    </div>
+<div class="top-container">
+        <div class="box box1">虛擬機服務</div>
+        <div class="box box2">學習助手</div>
+        <div class="box box3">Unity遊戲</div>
+        <div class="box box4">課程考題</div>
+        <div class="box box5">資訊科技學習app</div>
+</div>
+<div id="slideshow">
+    <a href="https://aws.amazon.com/tw/what-is/vdi/" target="_blank">
+        <img src="https://png.pngtree.com/element_our/20190529/ourmid/pngtree-a-computer-image_1198274.jpg" alt="虛擬機服務圖片">
+    </a>
+    <a href="https://chatgpt.com/?oai-dm=1" target="_blank">
+        <img src="https://thumb.ac-illust.com/7c/7cc8a6141e76ec6019e78047c6526284_t.jpeg" alt="學習助手圖片">
+    </a>
+    <a href="https://yq.chillyroom.com/da" target="_blank">
+        <img src="https://png.pngtree.com/element_our/20190528/ourlarge/pngtree-game-console-game-icon-image_1174023.jpg" alt="Unity遊戲圖片">
+    </a>
+    <a href="https://www.junyiacademy.org/" target="_blank">
+        <img src="https://png.pngtree.com/element_our/20190528/ourmid/pngtree-calculation-icon-image_1130437.jpg" alt="課程考題圖片">
+    </a>
+    <a href="https://www.gigabyte.com/tw/Glossary/it" target="_blank">
+        <img src="https://scontent.ftpe8-3.fna.fbcdn.net/v/t39.30808-6/361203523_580300404269852_2513904512092514114_n.png?_nc_cat=107&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeHRkomCIvs9m7mR9A8sNBujSEE6i4BIT9pIQTqLgEhP2u8tTs-_PP7FlvGhYRs0prSR_YTnPZIvLE9UnkNffWoc&_nc_ohc=estCjegC8JMQ7kNvgHVVhvj&_nc_ht=scontent.ftpe8-3.fna&oh=00_AYDcW8sshC9pu2eOUhAaYHnK7EcKHammInou4CEQZAHR9Q&oe=66C0A939"
+        alt="資訊科技服務app">
+    </a>
+</div>
+
+<script>
+    let index = 0;
+    const images = document.querySelectorAll('#slideshow img');
+
+    function showNextImage() {
+        const currentImage = images[index];
+        currentImage.classList.remove('active');
+        currentImage.classList.add('previous');
+        
+        index = (index + 1) % images.length;
+        
+        const nextImage = images[index];
+        nextImage.classList.add('active');
+
+        // 等待動畫結束後移除 previous 樣式
+        setTimeout(() => {
+            currentImage.classList.remove('previous');
+        }, 1000); // 這裡的時間要與 transition 時間一致
+    }
+
+    setInterval(showNextImage, 3000); // 每隔3秒顯示下一張圖片
+</script>
+
+</body>
+</html>
